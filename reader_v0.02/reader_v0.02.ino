@@ -75,13 +75,40 @@ void readSensorsData() {
   Serial.print("\n");
 }
 
+
+
+
+volatile unsigned long timePointsOpen, timePointsClosed, lastChange;
+volatile unsigned int numBangs;
+
+void pointsOpening(){
+    unsigned long t;
+    t = millis();
+    if (lastChange > 0){
+        timePointsClosed += (t - lastChange);
+    }
+    lastChange = t;
+    ++numBangs;
+}
+
+void readRpm() {
+  numBangs = 0;
+  attachInterrupt(digitalPinToInterrupt(2), pointsOpening, RISING);
+  delay(200);
+  detachInterrupt(0);
+  unsigned int rpm = ((60000/200)*numBangs)/2;
+  Serial.print("RPM ");
+  Serial.print(rpm);
+  Serial.print("\n");
+}
+
 int counter = 0;
 void loop() {
   if (++counter%3 == 0) {
     readSensorsData();
   }
   readGpsData();
-  delay(50);
+  readRpm();
 }
 
 
