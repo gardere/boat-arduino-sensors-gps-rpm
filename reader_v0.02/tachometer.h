@@ -1,0 +1,2 @@
+void pointsOpening();
+void sendRpmReading();
