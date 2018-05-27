@@ -1,6 +1,9 @@
 
 #include <SoftwareSerial.h>
+#include "TinyGPS++.h"
+
 SoftwareSerial gpsSerial(10, 11); //rx,tx
+TinyGPSPlus gps;
 
 #include "gps_readings.h"
 #include "sensor_readings.h"
@@ -12,6 +15,7 @@ SoftwareSerial gpsSerial(10, 11); //rx,tx
 void setup() {
   Serial.begin(9600);
   gpsSerial.begin(9600);
+  delay(1000);
 
   //Setup digital pins for tacho
   pinMode(3, INPUT);
@@ -20,15 +24,20 @@ void setup() {
 
 
 int counter = 0;
+//Read GPS data as often as possible not to miss anything
 void loop() {
+  parseGpsData(&gpsSerial, &gps);
   if (++counter%3 == 0) {
     sendSensorsData();
+    parseGpsData(&gpsSerial, &gps);
   }
   sendRpmReading();
-  sendGpsData(gpsSerial);
-  delay(100);
+  parseGpsData(&gpsSerial, &gps);
+  sendGpsData(&gps);
+
+  for (int i = 0; i < 10; ++i) {
+    parseGpsData(&gpsSerial, &gps);
+    delay(50);  
+  }
 }
-
-
-
 
