@@ -1,1 +1,2 @@
 void sendSensorsData();
+void sendRawReadings();

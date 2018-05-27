@@ -2,17 +2,17 @@
 #include "Arduino.h"
 
 
-int voltagePin = A1;
+int voltagePin = A0;
 float TOP_RESISTOR_VALUE = 110.0f; //aka R1  in voltage divider equation
-int sensorPins[4] = { A2, A3, A4, A5 };
+int sensorPins[4] = { A3, A7, A11, A14 };
 int numberOfSensors = sizeof(sensorPins) / sizeof(sensorPins[0]);
 
-float fullVoltage = 3.2f;
+float fullVoltage = 3.42f; //Best result after calibration
 
 
 float getSensorVoltage(int pinNumber) {
    float vout = analogRead(pinNumber);
-   return vout / 1024.0f * (1000 + 2200) / 1000 * fullVoltage; //we are returning Vin, the input voltage before going through the divider
+   return vout / 1024.0f * (1000 + 2200) / 1000 * 5.0f; //we are returning Vin, the input voltage before going through the divider
 }
 
 unsigned int getSensorResistance(int pinNumber) {
@@ -30,5 +30,16 @@ void sendSensorsData() {
     Serial.print(" ");
   }
   Serial.print("\n");
+}
+
+void sendRawReadings() {
+  Serial.print("RAW ");
+  Serial.print(analogRead(A1));
+  Serial.print(" ");
+  for(int i=0; i<numberOfSensors; ++i) {
+    Serial.print(analogRead(sensorPins[i]));
+    Serial.print(" ");
+  }
+  Serial.println("");
 }
 

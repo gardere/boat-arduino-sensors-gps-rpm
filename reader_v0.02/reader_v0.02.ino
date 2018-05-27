@@ -28,6 +28,7 @@ int counter = 0;
 void loop() {
   parseGpsData(&gpsSerial, &gps);
   if (++counter%3 == 0) {
+    sendRawReadings();
     sendSensorsData();
     parseGpsData(&gpsSerial, &gps);
   }
