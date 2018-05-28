@@ -36,9 +36,9 @@ void loop() {
   parseGpsData(&gpsSerial, &gps);
   sendGpsData(&gps);
 
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < 12; ++i) {
     parseGpsData(&gpsSerial, &gps);
-    delay(50);  
+    delay(20);  
   }
 }
 
