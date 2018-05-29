@@ -18,7 +18,7 @@ void sendGpsData(TinyGPSPlus *gps) {
     Serial.print(" ");
     Serial.print(gps->location.lat(), 10); // Latitude in degrees (double)
     Serial.print(" ");
-    Serial.print (gps->speed.kmph() > 3.0 ? gps->speed.kmph() : 0);
+    Serial.print (gps->speed.kmph() > 1.0 ? gps->speed.kmph() : 0);
     Serial.print(" ");
     Serial.print(gps->course.deg());
     Serial.print(" ");
