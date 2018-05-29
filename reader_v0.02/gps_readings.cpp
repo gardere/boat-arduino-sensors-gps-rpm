@@ -38,6 +38,10 @@ void sendGpsData(TinyGPSPlus *gps) {
     Serial.print(gps->time.minute());
     Serial.print(",");
     Serial.print(gps->time.second());
+    Serial.print(",");
+    Serial.print(gps->time.centisecond());
+    Serial.print("0");
+
 
     Serial.print(" ");
     Serial.print(gps->failedChecksum());
