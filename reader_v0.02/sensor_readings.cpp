@@ -4,7 +4,7 @@
 
 int voltagePin = A0;
 float TOP_RESISTOR_VALUE = 110.0f; //aka R1  in voltage divider equation
-int sensorPins[4] = { A3, A7, A11, A14 };
+int sensorPins[4] = { A1, A2, A3, A4 };
 int numberOfSensors = sizeof(sensorPins) / sizeof(sensorPins[0]);
 
 float fullVoltage = 3.42f; //Best result after calibration
